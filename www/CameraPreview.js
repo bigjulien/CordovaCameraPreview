@@ -51,12 +51,12 @@ CameraPreview.disable = function(disable) {
 CameraPreview.toggleFlash = function() {
 	if(flashon)
 	{
-		exec(null, null, PLUGIN_NAME, "switchFlash", [false]);
+		exec(null, null, PLUGIN_NAME, "switchFlash", ["false"]);
 		flashon = false;
 	}
 	else
 	{
-		exec(null, null, PLUGIN_NAME, "switchFlash", [true]);
+		exec(null, null, PLUGIN_NAME, "switchFlash", ["true"]);
 		flashon = true;
 	}
 };

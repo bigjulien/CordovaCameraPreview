@@ -26,7 +26,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	private final String takePictureAction = "takePicture";
 	private final String showCameraAction = "showCamera";
 	private final String hideCameraAction = "hideCamera";
-
+	private final String switchFlashAction = "switchFlash";
 	private CameraActivity fragment;
 	private CallbackContext takePictureCallbackContext;
 	private int containerViewId = 1;
@@ -253,7 +253,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	
 	private boolean switchFlash(JSONArray args, CallbackContext callbackContext)
 	{
-		boolean on = (boolean)args.getString(0);
+		boolean on = Boolean.parseBoolean(args.getString(0));
 		if(fragment == null){
 			    return false;
 		}
