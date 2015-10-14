@@ -62,6 +62,9 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	    else if (switchCameraAction.equals(action)){
 		    return switchCamera(args, callbackContext);
 	    }
+		else if (switchFlashAction.equals(action)){
+			return switchFlash(args, callbackContext);
+		}
 
     	return false;
     }
@@ -246,5 +249,27 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
     	Log.d(TAG, "setOnPictureTakenHandler");
 	    takePictureCallbackContext = callbackContext;
     	return true;
+	}
+	
+	private boolean switchFlash(JSONArray args, CallbackContext callbackContext)
+	{
+		boolean on = args.getString(0);
+		if(fragment == null){
+			    return false;
+		}
+		Camera camera = fragment.getCamera();
+		if (camera == null){
+		   return true;
+		}
+		Camera.Parameters params = camera.getParameters();
+		
+		if(on)
+		{
+			params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+		}
+		else
+		{
+			params.setFlashMode(Camera.ParametersFLASH_MODE_OFF);
+		}
 	}
 }

@@ -3,7 +3,7 @@ var argscheck = require('cordova/argscheck'),
   exec = require('cordova/exec');
 
 var PLUGIN_NAME = "CameraPreview";
-
+var flashon = false;
 var CameraPreview = function() {};
 
 CameraPreview.setOnPictureTakenHandler = function(onPictureTaken) {
@@ -46,6 +46,19 @@ CameraPreview.show = function() {
 
 CameraPreview.disable = function(disable) {
   exec(null, null, PLUGIN_NAME, "disable", [disable]);
+};
+
+CameraPreview.toggleFlash = function() {
+	if(flashon)
+	{
+		exec(null, null, PLUGIN_NAME, "switchFlash", [false]);
+		flashon = false;
+	}
+	else
+	{
+		exec(null, null, PLUGIN_NAME, "switchFlash", [true]);
+		flashon = true;
+	}
 };
 
 module.exports = CameraPreview;
