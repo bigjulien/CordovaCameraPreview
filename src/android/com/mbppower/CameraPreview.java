@@ -253,7 +253,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	
 	private boolean switchFlash(JSONArray args, CallbackContext callbackContext)
 	{
-		boolean on = args.getString(0);
+		boolean on = (boolean)args.getString(0);
 		if(fragment == null){
 			    return false;
 		}
@@ -269,7 +269,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 		}
 		else
 		{
-			params.setFlashMode(Camera.ParametersFLASH_MODE_OFF);
+			params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
 		}
 	}
 }
