@@ -272,6 +272,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 			{
 				params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
 			}
+			fragment.setCameraParameters(params);
 			return true;
 		}
 		catch(Exception e)
