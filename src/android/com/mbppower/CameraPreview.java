@@ -253,23 +253,32 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	
 	private boolean switchFlash(JSONArray args, CallbackContext callbackContext)
 	{
-		boolean on = Boolean.parseBoolean(args.getString(0));
-		if(fragment == null){
-			    return false;
+		try {
+			boolean on = Boolean.parseBoolean(args.getString(0));
+			if(fragment == null){
+				    return false;
+			}
+			Camera camera = fragment.getCamera();
+			if (camera == null){
+			   return true;
+			}
+			Camera.Parameters params = camera.getParameters();
+			
+			if(on)
+			{
+				params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+			}
+			else
+			{
+				params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+			}
+			return true;
 		}
-		Camera camera = fragment.getCamera();
-		if (camera == null){
-		   return true;
+		catch(Exception e)
+		{
+		      e.printStackTrace();
+		      return false;
 		}
-		Camera.Parameters params = camera.getParameters();
 		
-		if(on)
-		{
-			params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-		}
-		else
-		{
-			params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-		}
 	}
 }
