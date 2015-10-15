@@ -317,4 +317,35 @@
                  }
          }];
 }
+
+- (void)switchFlash:(CDVInvokedUrlCommand*)command {
+    CDVPluginResult* pluginResult;
+	NSString *filterName = command.arguments[0];
+    if ([self deviceHasFlashlight]) {		
+        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+		[device lockForConfiguration:nil];
+		if ([filterName isEqual: @"true"]) {
+			[device setTorchMode:AVCaptureTorchModeOn];
+            [device setFlashMode:AVCaptureFlashModeOn];
+		}
+		else {
+			[device setTorchMode:AVCaptureTorchModeOff];
+			[device setFlashMode:AVCaptureFlashModeOff];
+		}
+        [device unlockForConfiguration];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Device is not capable of using the flashlight. Please test with flashlight.available()"];
+    }
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (BOOL)deviceHasFlashlight {
+    if (NSClassFromString(@"AVCaptureDevice")) {
+        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        return [device hasTorch] && [device hasFlash];
+    }
+    return false;
+}
+
 @end
