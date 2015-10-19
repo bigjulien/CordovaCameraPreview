@@ -312,7 +312,7 @@ public class CameraActivity extends Fragment {
     }
 	
 	public void takePicture(final double maxWidth, final double maxHeight){
-        Camera.Parameters parameters = camera.getParameters();
+        Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPreviewSize(maxWidth, maxHeight);
         camera.setParameters(parameters);
 		final ImageView pictureView = (ImageView) view.findViewById(getResources().getIdentifier("picture_view", "id", appResourcesPackage));
