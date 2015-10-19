@@ -313,7 +313,6 @@ public class CameraActivity extends Fragment {
 	
 	public void takePicture(final double maxWidth, final double maxHeight){
 		final ImageView pictureView = (ImageView) view.findViewById(getResources().getIdentifier("picture_view", "id", appResourcesPackage));
-		
 		if(mPreview != null) {
 			
 			if(!canTakePicture)
@@ -321,16 +320,16 @@ public class CameraActivity extends Fragment {
 			
 			canTakePicture = false;
 
-			mPreview.setOneShotPreviewCallback(new Camera.PictureCallBack() {
-			
+			mPreview.setOneShotPreviewCallback(new Camera.PreviewCallback() {
+
 				@Override
-				public void onPictureTaken(final byte[] data, final Camera camera) {
-					
+				public void onPreviewFrame(final byte[] data, final Camera camera) {
+
 					new Thread() {
 						public void run() {
 
 							//raw picture
-							byte[] bytes = mPreview.getFramePicture(data, camera);
+							byte[] bytes = camera.takePicture(data,camera);
 							final Bitmap pic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
 							//scale down
@@ -578,7 +577,6 @@ class Preview extends RelativeLayout implements SurfaceHolder.Callback {
             camera.setPreviewDisplay(mHolder);
 	        Camera.Parameters parameters = camera.getParameters();
             parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            parameters.setPictureSize(2560,1920);
 	        camera.setParameters(parameters);
         }
         catch (IOException exception) {
